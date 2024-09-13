@@ -6,7 +6,21 @@ import bcrypt from 'bcrypt';
 export const userSchema: Schema<IUser> = new Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  cart: [
+    {
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+      quantity: { type: Number, required: true },
+    },
+  ],
+  orders: [
+    {
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+      quantity: { type: Number, required: true },
+      orderDate: { type: Date, default: Date.now },
+      status: { type: String, enum: ['Pending', 'Shipped', 'Delivered'], default: 'Pending' },
+    },
+  ],
 });
 
 userSchema.pre('save', async function (next) {
