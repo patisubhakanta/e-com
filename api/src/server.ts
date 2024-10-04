@@ -18,7 +18,7 @@ app.use(express.json());
 mongoose
   .connect(mongoUri)
   .then(() => console.log("MongoDB connected successfully"))
-  .catch((error) => console.error("MongoDB connection error:", error));
+  .catch((error) => console.error("MongoDB connection error:", error)); // Move to 
 
 // Routes
 app.use("/api", ProductRoutes);

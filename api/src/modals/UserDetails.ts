@@ -9,16 +9,13 @@ export const getUserDetailsById = async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
 
-
         const user = await User.findById(userId)
             .populate('cart.productId', 'name price')
             .populate('orders.productId', 'name price');
 
-
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-
 
         res.json({
             username: user.username,

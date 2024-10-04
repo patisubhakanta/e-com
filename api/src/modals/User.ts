@@ -21,15 +21,12 @@ export const userSchema: Schema<IUser> = new Schema({
       status: { type: String, enum: ['Pending', 'Shipped', 'Delivered'], default: 'Pending' },
     },
   ],
+  // timestamp
+  //docs
 });
 
 userSchema.pre('save', async function (next) {
   const user = this as IUser;
-
-  // if (!user.isModified('password')) {
-  //   return next();
-  // }
-
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
   next();
